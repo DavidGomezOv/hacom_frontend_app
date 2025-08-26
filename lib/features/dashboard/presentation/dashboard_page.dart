@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacom_frontend_app/core/router/app_router.dart';
 import 'package:hacom_frontend_app/features/auth/presentation/bloc/auth_cubit.dart';
+import 'package:hacom_frontend_app/features/dashboard/presentation/widgets/dashboard_item_button_widget.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -15,25 +16,41 @@ class DashboardPage extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Center(
+        body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: GridView.count(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1,
-              physics: const NeverScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 20,
               children: [
-                ElevatedButton(onPressed: () {}, child: Text("Button 1")),
-                ElevatedButton(onPressed: () {}, child: Text("Button 2")),
-                ElevatedButton(onPressed: () {}, child: Text("Button 3")),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<AuthCubit>().logout();
-                  },
-                  child: Text("Logout"),
+                Text(
+                  'Welcome!',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
                 ),
+                Text(
+                  'Please select what you want to do today.',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                SizedBox(height: 30),
+                DashboardItemButtonWidget(
+                  buttonTitle: 'Supervisor',
+                  buttonDescription: 'This is a short description of the supervisor menu.',
+                  onPressed: () {},
+                ),
+                DashboardItemButtonWidget(
+                  buttonTitle: 'Notifications',
+                  buttonDescription: 'This is a short description of the supervisor menu.',
+                  onPressed: () {},
+                ),
+                DashboardItemButtonWidget(
+                  buttonTitle: 'Places',
+                  buttonDescription: 'This is a short description of the supervisor menu.',
+                  onPressed: () {},
+                ),
+                Spacer(),
+                DashboardItemButtonWidget(buttonTitle: 'Logout', onPressed: () {}),
               ],
             ),
           ),
