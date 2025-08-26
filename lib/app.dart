@@ -12,12 +12,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //final getIt = GetIt.instance;
     return MultiBlocProvider(
-      providers: [BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>())],
-      child: MaterialApp.router(
-        title: 'My App',
-        routerConfig: AppRouter.router,
-        debugShowCheckedModeBanner: false,
-      ),
+      providers: [
+        BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()..checkLoginStatus()),
+      ],
+      child: AppView(),
+    );
+  }
+}
+
+class AppView extends StatefulWidget {
+  const AppView({super.key});
+
+  @override
+  State<AppView> createState() => _AppViewState();
+}
+
+class _AppViewState extends State<AppView> {
+  late final router = AppRouter.generateRouter(context);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      title: 'Hacom',
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

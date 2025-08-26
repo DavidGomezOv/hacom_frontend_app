@@ -11,12 +11,12 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit({required this.authRepository}) : super(const AuthState.initial());
 
-  Future<void> login({required String accountName, required int phoneNumber}) async {
+  Future<void> login({required String accountName, required String phoneNumber}) async {
     emit(AuthState.loading());
 
     final result = await authRepository.loginWithCredentials(
       accountName: accountName,
-      phoneNumber: phoneNumber,
+      phoneNumber: int.parse(phoneNumber),
     );
 
     result.fold(
@@ -54,7 +54,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (failure) => emit(AuthState.failure(errorMessage: 'Logout error')),
-      (_) => emit(const AuthState.initial()),
+      (_) => emit(const AuthState.logout()),
     );
   }
 }

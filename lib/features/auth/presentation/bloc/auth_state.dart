@@ -9,4 +9,6 @@ class AuthState with _$AuthState {
   const factory AuthState.success() = _Success;
 
   const factory AuthState.failure({required String errorMessage}) = _Failure;
+
+  const factory AuthState.logout() = _Logout;
 }
