@@ -21,9 +21,7 @@ class DashboardPage extends StatelessWidget {
           DashboardItemButtonWidget(
             buttonTitle: 'Supervisor',
             buttonDescription: 'This is a short description of the supervisor menu.',
-            onPressed: () {
-              context.goNamed(AppRouter.supervisorRouteName);
-            },
+            onPressed: () => context.goNamed(AppRouter.supervisorRouteName),
           ),
           DashboardItemButtonWidget(
             buttonTitle: 'Notifications',
@@ -33,7 +31,7 @@ class DashboardPage extends StatelessWidget {
           DashboardItemButtonWidget(
             buttonTitle: 'Places',
             buttonDescription: 'This is a short description of the supervisor menu.',
-            onPressed: () {},
+            onPressed: () => context.goNamed(AppRouter.placesRouteName),
           ),
           Spacer(),
           DashboardItemButtonWidget(

@@ -1,8 +1,8 @@
-
 import 'package:go_router/go_router.dart';
 import 'package:hacom_frontend_app/features/auth/presentation/login_page.dart';
 import 'package:hacom_frontend_app/features/core/presentation/splash_page.dart';
 import 'package:hacom_frontend_app/features/dashboard/presentation/dashboard_page.dart';
+import 'package:hacom_frontend_app/features/places/presentation/places_page.dart';
 import 'package:hacom_frontend_app/features/supervisor/presentation/supervisor_page.dart';
 
 class AppRouter {
@@ -19,6 +19,10 @@ class AppRouter {
   static String get supervisorRoutePath => '/supervisor';
 
   static String get supervisorRouteName => 'supervisor';
+
+  static String get placesRoutePath => '/places';
+
+  static String get placesRouteName => 'places';
 
   static GoRouter generateRouter = GoRouter(
     initialLocation: splashRoutePath,
@@ -38,6 +42,11 @@ class AppRouter {
             path: supervisorRoutePath,
             name: supervisorRouteName,
             builder: (context, state) => const SupervisorPage(),
+          ),
+          GoRoute(
+            path: placesRoutePath,
+            name: placesRouteName,
+            builder: (context, state) => const PlacesPage(),
           ),
         ],
       ),

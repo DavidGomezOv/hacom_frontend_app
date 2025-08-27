@@ -8,6 +8,11 @@ import 'package:hacom_frontend_app/features/auth/data/datasources/remote/auth_re
 import 'package:hacom_frontend_app/features/auth/data/datasources/remote/auth_remote_datasource_impl.dart';
 import 'package:hacom_frontend_app/features/auth/domain/auth_repository.dart';
 import 'package:hacom_frontend_app/features/auth/presentation/bloc/auth_cubit.dart';
+import 'package:hacom_frontend_app/features/places/data/datasources/remote/places_remote_datasource.dart';
+import 'package:hacom_frontend_app/features/places/data/datasources/remote/places_remote_datasource_impl.dart';
+import 'package:hacom_frontend_app/features/places/data/places_repository_impl.dart';
+import 'package:hacom_frontend_app/features/places/domain/places_repository.dart';
+import 'package:hacom_frontend_app/features/places/presentation/bloc/places_cubit.dart';
 import 'package:hacom_frontend_app/features/supervisor/data/datasources/remote/supervisor_remote_datasource.dart';
 import 'package:hacom_frontend_app/features/supervisor/data/datasources/remote/supervisor_remote_datasource_impl.dart';
 import 'package:hacom_frontend_app/features/supervisor/data/supervisor_repository_impl.dart';
@@ -26,6 +31,9 @@ Future<void> initDependencies() async {
   getIt.registerLazySingleton<SupervisorRemoteDatasource>(
     () => SupervisorRemoteDatasourceImpl(apiClient: getIt()),
   );
+  getIt.registerLazySingleton<PlacesRemoteDatasource>(
+    () => PlacesRemoteDatasourceImpl(apiClient: getIt()),
+  );
 
   // LOCAL DATA SOURCES
   getIt.registerLazySingleton<AuthLocalDatasource>(() => AuthLocalDatasourceImpl());
@@ -37,8 +45,12 @@ Future<void> initDependencies() async {
   getIt.registerLazySingleton<SupervisorRepository>(
     () => SupervisorRepositoryImpl(remoteDatasource: getIt()),
   );
+  getIt.registerLazySingleton<PlacesRepository>(
+    () => PlacesRepositoryImpl(remoteDatasource: getIt()),
+  );
 
   // CUBITS
   getIt.registerFactory<AuthCubit>(() => AuthCubit(authRepository: getIt()));
   getIt.registerFactory<SupervisorCubit>(() => SupervisorCubit(repository: getIt()));
+  getIt.registerFactory<PlacesCubit>(() => PlacesCubit(repository: getIt()));
 }

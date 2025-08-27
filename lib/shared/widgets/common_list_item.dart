@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SupervisorListItem extends StatelessWidget {
-  const SupervisorListItem({
-    super.key,
-    required this.title,
-    required this.description,
-    required this.color,
-  });
+class CommonListItem extends StatelessWidget {
+  const CommonListItem({super.key, required this.title, required this.description, this.trailing});
 
   final String title;
   final String description;
-  final Color color;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +20,7 @@ class SupervisorListItem extends StatelessWidget {
           ),
           title: Text(title),
           subtitle: Text(description),
-          trailing: Container(
-            width: 20,
-            height: 20,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: color),
-          ),
+          trailing: trailing,
         ),
       ),
     );

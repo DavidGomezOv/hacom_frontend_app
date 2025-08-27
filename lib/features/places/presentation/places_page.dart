@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hacom_frontend_app/features/supervisor/domain/entities/vehicle_entity.dart';
-import 'package:hacom_frontend_app/features/supervisor/presentation/bloc/supervisor_cubit.dart';
+import 'package:hacom_frontend_app/features/places/domain/entities/place_entity.dart';
+import 'package:hacom_frontend_app/features/places/presentation/bloc/places_cubit.dart';
 import 'package:hacom_frontend_app/shared/cubit/paginated_cubit.dart';
 import 'package:hacom_frontend_app/shared/widgets/base_page.dart';
 import 'package:hacom_frontend_app/shared/widgets/common_list_item.dart';
 
-class SupervisorPage extends StatelessWidget {
-  const SupervisorPage({super.key});
+class PlacesPage extends StatelessWidget {
+  const PlacesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    context.read<SupervisorCubit>().fetch();
+    context.read<PlacesCubit>().fetch();
 
     return BasePage(
-      pageTitle: 'Supervisor',
-      pageDescription: 'Short description of supervisor module.',
+      pageTitle: 'Places',
+      pageDescription: 'Short description of places module.',
       showBackButton: true,
       leading: IconButton(
         icon: Icon(Icons.refresh_outlined),
-        visualDensity: VisualDensity.compact,
-        onPressed: () => context.read<SupervisorCubit>().fetch(refresh: true),
+        onPressed: () => context.read<PlacesCubit>().fetch(refresh: true),
       ),
-      content: BlocBuilder<SupervisorCubit, PaginatedState<VehicleEntity>>(
+      content: BlocBuilder<PlacesCubit, PaginatedState<PlaceEntity>>(
         builder: (context, state) => state.maybeWhen(
           failure: (errorMessage) => Center(child: Text('Error: $errorMessage')),
           success: (items, currentPage, totalPages, isFetching) {
@@ -32,7 +31,7 @@ class SupervisorPage extends StatelessWidget {
                 if (!isFetching &&
                     scrollInfo.metrics.pixels >= (scrollInfo.metrics.maxScrollExtent - 200) &&
                     canFetchMore) {
-                  context.read<SupervisorCubit>().fetch();
+                  context.read<PlacesCubit>().fetch();
                 }
                 return false;
               },
@@ -45,19 +44,8 @@ class SupervisorPage extends StatelessWidget {
                       child: Center(child: CircularProgressIndicator()),
                     );
                   }
-                  final vehicle = items[index];
-                  return CommonListItem(
-                    title: vehicle.plate,
-                    description: vehicle.label ?? '',
-                    trailing: Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Color(int.parse('0xFF${vehicle.color}')),
-                      ),
-                    ),
-                  );
+                  final place = items[index];
+                  return CommonListItem(title: place.name, description: place.description);
                 },
               ),
             );
