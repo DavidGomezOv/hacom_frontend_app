@@ -2,7 +2,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hacom_frontend_app/features/auth/presentation/login_page.dart';
 import 'package:hacom_frontend_app/features/core/presentation/splash_page.dart';
 import 'package:hacom_frontend_app/features/dashboard/presentation/dashboard_page.dart';
+import 'package:hacom_frontend_app/features/map/presentation/map_page.dart';
 import 'package:hacom_frontend_app/features/places/presentation/places_page.dart';
+import 'package:hacom_frontend_app/features/supervisor/domain/entities/vehicle_entity.dart';
 import 'package:hacom_frontend_app/features/supervisor/presentation/supervisor_page.dart';
 
 class AppRouter {
@@ -24,6 +26,10 @@ class AppRouter {
 
   static String get placesRouteName => 'places';
 
+  static String get mapRoutePath => '/map';
+
+  static String get mapRouteName => 'maps';
+
   static GoRouter generateRouter = GoRouter(
     initialLocation: splashRoutePath,
     routes: [
@@ -42,6 +48,16 @@ class AppRouter {
             path: supervisorRoutePath,
             name: supervisorRouteName,
             builder: (context, state) => const SupervisorPage(),
+            routes: [
+              GoRoute(
+                path: mapRoutePath,
+                name: mapRouteName,
+                builder: (context, state) {
+                  final vehicle = state.extra as VehicleEntity;
+                  return MapPage(vehicle: vehicle);
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: placesRoutePath,

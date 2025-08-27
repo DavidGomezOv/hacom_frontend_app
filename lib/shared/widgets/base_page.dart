@@ -18,46 +18,45 @@ class BasePage extends StatelessWidget {
   final Widget content;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (showBackButton)
-                    IconButton(
-                      icon: Icon(Icons.arrow_back_ios_new_rounded),
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () => context.pop(),
-                    ),
-                  Text(
-                    'Supervisor',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
+  Widget build(BuildContext context) => Scaffold(
+    backgroundColor: Colors.white,
+    body: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (showBackButton)
+                  IconButton(
+                    icon: Icon(Icons.arrow_back_ios_new_rounded),
+                    visualDensity: VisualDensity.compact,
+                    onPressed: () => context.pop(),
                   ),
-                  Spacer(),
-                  if (leading != null) leading!,
-                ],
-              ),
+                Text(
+                  pageTitle,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                Spacer(),
+                if (leading != null) leading!,
+              ],
+            ),
+            if (pageDescription != null)
               Text(
-                'Short description of supervisor module.',
+                pageDescription!,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 20),
               ),
-              SizedBox(height: 30),
-              Flexible(child: content),
-            ],
-          ),
+            SizedBox(height: 30),
+            Flexible(child: content),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CommonListItem extends StatelessWidget {
-  const CommonListItem({super.key, required this.title, required this.description, this.trailing});
+  const CommonListItem({
+    super.key,
+    required this.title,
+    required this.description,
+    this.trailing,
+    this.onTap,
+  });
 
   final String title;
   final String description;
   final Widget? trailing;
+  final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +28,7 @@ class CommonListItem extends StatelessWidget {
           title: Text(title),
           subtitle: Text(description),
           trailing: trailing,
+          onTap: onTap,
         ),
       ),
     );

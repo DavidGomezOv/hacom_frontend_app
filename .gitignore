@@ -48,3 +48,7 @@ app.*.map.json
 
 # Env variables
 .env
+
+# iOS API keys
+ios/Flutter/Debug.xcconfig
+ios/Flutter/Release.xcconfig
