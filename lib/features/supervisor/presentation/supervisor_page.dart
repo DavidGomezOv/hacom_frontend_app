@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hacom_frontend_app/features/supervisor/domain/entities/vehicle_entity.dart';
 import 'package:hacom_frontend_app/features/supervisor/presentation/bloc/supervisor_cubit.dart';
+import 'package:hacom_frontend_app/features/supervisor/presentation/widgets/supervisor_list_item.dart';
 import 'package:hacom_frontend_app/shared/widgets/base_page.dart';
+import 'package:hacom_frontend_app/shared/widgets/infinite_scroll_list_with_pagination.dart';
 
 class SupervisorPage extends StatelessWidget {
   const SupervisorPage({super.key});
@@ -23,52 +26,15 @@ class SupervisorPage extends StatelessWidget {
         builder: (context, state) {
           return state.maybeWhen(
             success: (vehicles, totalPages, currentPage, isFetching) {
-              final bool canFetchMore = currentPage <= totalPages;
-              return NotificationListener<ScrollNotification>(
-                onNotification: (scrollInfo) {
-                  if (!isFetching &&
-                      scrollInfo.metrics.pixels >= (scrollInfo.metrics.maxScrollExtent - 200) &&
-                      canFetchMore) {
-                    context.read<SupervisorCubit>().fetchVehicles();
-                  }
-                  return false;
-                },
-                child: ListView.builder(
-                  itemCount: vehicles.length + (canFetchMore ? 1 : 0),
-                  itemBuilder: (context, index) {
-                    if (index == vehicles.length) {
-                      return const Padding(
-                        padding: EdgeInsets.all(30),
-                        child: Center(child: CircularProgressIndicator()),
-                      );
-                    }
-                    final vehicle = vehicles[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: Material(
-                        color: Colors.white,
-                        child: ListTile(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          title: Text(vehicle.plate),
-                          subtitle: Text(vehicle.label ?? ''),
-                          trailing: Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Color(int.parse('0xFF${vehicle.color}')),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+              return InfiniteScrollListWithPagination<VehicleEntity>(
+                items: vehicles,
+                isFetching: isFetching,
+                canFetchMore: currentPage < totalPages,
+                onFetchMore: () => context.read<SupervisorCubit>().fetchVehicles(),
+                itemBuilder: (context, vehicle) => SupervisorListItem(
+                  title: vehicle.plate,
+                  description: vehicle.label ?? '',
+                  color: Color(int.parse('0xFF${vehicle.color}')),
                 ),
               );
             },
