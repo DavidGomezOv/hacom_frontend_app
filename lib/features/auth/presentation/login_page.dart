@@ -6,7 +6,7 @@ import 'package:hacom_frontend_app/core/router/app_router.dart';
 import 'package:hacom_frontend_app/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:hacom_frontend_app/features/auth/presentation/widgets/login_text_form_field_widget.dart';
 import 'package:hacom_frontend_app/shared/utils/form_validators.dart';
-import 'package:hacom_frontend_app/shared/widgets/custom_button.dart';
+import 'package:hacom_frontend_app/shared/widgets/common_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                             minLengthErrorMessage: 'Phone Number should be 8 digits length',
                           ),
                         ),
-                        CustomButton(
+                        CommonButton(
                           isLoading: isLoading,
                           onPressed: isLoading
                               ? null

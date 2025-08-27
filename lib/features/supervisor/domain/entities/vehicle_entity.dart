@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hacom_frontend_app/features/map/domain/entities/map_marker_entity.dart';
 
 part 'vehicle_entity.freezed.dart';
 
@@ -16,4 +17,14 @@ abstract class VehicleEntity with _$VehicleEntity {
   }) = _VehicleEntity;
 
   factory VehicleEntity.fromJson(Map<String, dynamic> json) => _$VehicleEntityFromJson(json);
+}
+
+extension VehicleEntityExtension on VehicleEntity {
+  MapMarkerEntity get toMapMarkerEntity => MapMarkerEntity(
+    markerId: id,
+    markerTitle: plate,
+    markerLabel: label ?? '',
+    latitude: latitude ?? 0,
+    longitude: longitude ?? 0,
+  );
 }
