@@ -8,6 +8,11 @@ import 'package:hacom_frontend_app/features/auth/data/datasources/remote/auth_re
 import 'package:hacom_frontend_app/features/auth/data/datasources/remote/auth_remote_datasource_impl.dart';
 import 'package:hacom_frontend_app/features/auth/domain/auth_repository.dart';
 import 'package:hacom_frontend_app/features/auth/presentation/bloc/auth_cubit.dart';
+import 'package:hacom_frontend_app/features/supervisor/data/datasources/remote/supervisor_remote_datasource.dart';
+import 'package:hacom_frontend_app/features/supervisor/data/datasources/remote/supervisor_remote_datasource_impl.dart';
+import 'package:hacom_frontend_app/features/supervisor/data/supervisor_repository_impl.dart';
+import 'package:hacom_frontend_app/features/supervisor/domain/supervisor_repository.dart';
+import 'package:hacom_frontend_app/features/supervisor/presentation/bloc/supervisor_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -18,6 +23,9 @@ Future<void> initDependencies() async {
   getIt.registerLazySingleton<AuthRemoteDatasource>(
     () => AuthRemoteDatasourceImpl(apiClient: getIt()),
   );
+  getIt.registerLazySingleton<SupervisorRemoteDatasource>(
+    () => SupervisorRemoteDatasourceImpl(apiClient: getIt()),
+  );
 
   // LOCAL DATA SOURCES
   getIt.registerLazySingleton<AuthLocalDatasource>(() => AuthLocalDatasourceImpl());
@@ -26,7 +34,11 @@ Future<void> initDependencies() async {
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(authRemoteDatasource: getIt(), authLocalDatasource: getIt()),
   );
+  getIt.registerLazySingleton<SupervisorRepository>(
+    () => SupervisorRepositoryImpl(remoteDatasource: getIt()),
+  );
 
   // CUBITS
   getIt.registerFactory<AuthCubit>(() => AuthCubit(authRepository: getIt()));
+  getIt.registerFactory<SupervisorCubit>(() => SupervisorCubit(repository: getIt()));
 }

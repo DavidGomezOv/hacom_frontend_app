@@ -29,4 +29,11 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       throw e.toString();
     }
   }
+
+  @override
+  Future<void> setTokenFromLocalSource({required String? token}) async {
+    if (token != null) {
+      apiClient.setToken(token);
+    }
+  }
 }

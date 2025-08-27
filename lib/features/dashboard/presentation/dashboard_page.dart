@@ -37,7 +37,9 @@ class DashboardPage extends StatelessWidget {
                 DashboardItemButtonWidget(
                   buttonTitle: 'Supervisor',
                   buttonDescription: 'This is a short description of the supervisor menu.',
-                  onPressed: () {},
+                  onPressed: () {
+                    context.goNamed(AppRouter.supervisorRouteName);
+                  },
                 ),
                 DashboardItemButtonWidget(
                   buttonTitle: 'Notifications',
@@ -50,7 +52,12 @@ class DashboardPage extends StatelessWidget {
                   onPressed: () {},
                 ),
                 Spacer(),
-                DashboardItemButtonWidget(buttonTitle: 'Logout', onPressed: () {}),
+                DashboardItemButtonWidget(
+                  buttonTitle: 'Logout',
+                  onPressed: () {
+                    context.read<AuthCubit>().logout();
+                  },
+                ),
               ],
             ),
           ),

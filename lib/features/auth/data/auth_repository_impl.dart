@@ -38,6 +38,13 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final result = await authLocalDatasource.hasValidToken();
 
+      if (result) {
+        final token = await authLocalDatasource.getToken();
+
+        authRemoteDatasource.setTokenFromLocalSource(token: token);
+      } else {
+        await authLocalDatasource.deleteToken();
+      }
       return Right(result);
     } catch (e) {
       return Left(ServerFailure(errorMessage: e.toString()));
