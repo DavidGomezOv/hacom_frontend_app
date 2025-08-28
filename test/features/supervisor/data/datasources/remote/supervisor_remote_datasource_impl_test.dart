@@ -54,7 +54,9 @@ void main() {
 
     test('success api call returns VehiclesResponseEntity', () async {
       when(
-        mockApiClient.get('${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit'),
+        mockApiClient.get(
+          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
+        ),
       ).thenAnswer((_) async => http.Response(jsonEncode(tVehiclesJson), 200));
 
       final result = await datasource.getVehicles(page: tPage, limit: tLimit);
@@ -62,34 +64,65 @@ void main() {
       expect(result, isA<VehiclesResponseEntity>());
       expect(result.total, tVehiclesEntity.total);
       expect(result.vehicles.length, tVehiclesEntity.vehicles.length);
-      verify(mockApiClient.get('${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit')).called(1);
+      verify(
+        mockApiClient.get(
+          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
+        ),
+      ).called(1);
     });
 
     test('throws exception when response is null', () async {
       when(
-        mockApiClient.get('${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit'),
+        mockApiClient.get(
+          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
+        ),
       ).thenAnswer((_) async => null);
 
-      expect(() => datasource.getVehicles(page: tPage, limit: tLimit), throwsA(isA<String>()));
-      verify(mockApiClient.get('${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit')).called(1);
+      expect(
+        () => datasource.getVehicles(page: tPage, limit: tLimit),
+        throwsA(isA<String>()),
+      );
+      verify(
+        mockApiClient.get(
+          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
+        ),
+      ).called(1);
     });
 
     test('throws exception when statusCode is not 200', () async {
       when(
-        mockApiClient.get('${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit'),
+        mockApiClient.get(
+          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
+        ),
       ).thenAnswer((_) async => http.Response('Error', 401));
 
-      expect(() => datasource.getVehicles(page: tPage, limit: tLimit), throwsA(isA<String>()));
-      verify(mockApiClient.get('${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit')).called(1);
+      expect(
+        () => datasource.getVehicles(page: tPage, limit: tLimit),
+        throwsA(isA<String>()),
+      );
+      verify(
+        mockApiClient.get(
+          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
+        ),
+      ).called(1);
     });
 
     test('throws exception when ApiClient.get throws', () async {
       when(
-        mockApiClient.get('${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit'),
+        mockApiClient.get(
+          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
+        ),
       ).thenThrow(Exception('Network error'));
 
-      expect(() => datasource.getVehicles(page: tPage, limit: tLimit), throwsA(isA<String>()));
-      verify(mockApiClient.get('${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit')).called(1);
+      expect(
+        () => datasource.getVehicles(page: tPage, limit: tLimit),
+        throwsA(isA<String>()),
+      );
+      verify(
+        mockApiClient.get(
+          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
+        ),
+      ).called(1);
     });
   });
 }

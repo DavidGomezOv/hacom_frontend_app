@@ -16,7 +16,9 @@ void main() {
 
   setUp(() {
     mockRemoteDatasource = MockSupervisorRemoteDatasource();
-    repository = SupervisorRepositoryImpl(remoteDatasource: mockRemoteDatasource);
+    repository = SupervisorRepositoryImpl(
+      remoteDatasource: mockRemoteDatasource,
+    );
     clearInteractions(mockRemoteDatasource);
   });
 
@@ -50,27 +52,37 @@ void main() {
 
     final tVehiclesEntity = VehiclesResponseEntity.fromJson(tVehiclesJson);
 
-    test('returns Right(VehiclesResponseEntity) when datasource succeeds', () async {
-      when(
-        mockRemoteDatasource.getVehicles(page: tPage, limit: tLimit),
-      ).thenAnswer((_) async => tVehiclesEntity);
+    test(
+      'returns Right(VehiclesResponseEntity) when datasource succeeds',
+      () async {
+        when(
+          mockRemoteDatasource.getVehicles(page: tPage, limit: tLimit),
+        ).thenAnswer((_) async => tVehiclesEntity);
 
-      final result = await repository.getVehicles(page: tPage, limit: tLimit);
+        final result = await repository.getVehicles(page: tPage, limit: tLimit);
 
-      expect(result, Right(tVehiclesEntity));
-      verify(mockRemoteDatasource.getVehicles(page: tPage, limit: tLimit)).called(1);
-    });
+        expect(result, Right(tVehiclesEntity));
+        verify(
+          mockRemoteDatasource.getVehicles(page: tPage, limit: tLimit),
+        ).called(1);
+      },
+    );
 
-    test('returns Left(ServerFailure) when datasource throws exception', () async {
-      when(
-        mockRemoteDatasource.getVehicles(page: tPage, limit: tLimit),
-      ).thenThrow(Exception('Network error'));
+    test(
+      'returns Left(ServerFailure) when datasource throws exception',
+      () async {
+        when(
+          mockRemoteDatasource.getVehicles(page: tPage, limit: tLimit),
+        ).thenThrow(Exception('Network error'));
 
-      final result = await repository.getVehicles(page: tPage, limit: tLimit);
+        final result = await repository.getVehicles(page: tPage, limit: tLimit);
 
-      expect(result.isLeft(), true);
-      expect(result.fold((l) => l, (r) => null), isA<ServerFailure>());
-      verify(mockRemoteDatasource.getVehicles(page: tPage, limit: tLimit)).called(1);
-    });
+        expect(result.isLeft(), true);
+        expect(result.fold((l) => l, (r) => null), isA<ServerFailure>());
+        verify(
+          mockRemoteDatasource.getVehicles(page: tPage, limit: tLimit),
+        ).called(1);
+      },
+    );
   });
 }
