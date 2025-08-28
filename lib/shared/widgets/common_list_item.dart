@@ -22,7 +22,10 @@ class CommonListItem extends StatelessWidget {
         color: Colors.white,
         child: ListTile(
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.primary,
+              width: 1,
+            ),
             borderRadius: BorderRadius.circular(10),
           ),
           title: Text(title),

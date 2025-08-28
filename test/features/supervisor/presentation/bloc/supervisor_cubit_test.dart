@@ -18,7 +18,8 @@ void main() {
     mockSupervisorRepository = MockSupervisorRepository();
   });
 
-  SupervisorCubit getSupervisorCubit() => SupervisorCubit(repository: mockSupervisorRepository);
+  SupervisorCubit getSupervisorCubit() =>
+      SupervisorCubit(repository: mockSupervisorRepository);
 
   group('SupervisorCubit initial', () {
     blocTest<SupervisorCubit, PaginatedState<VehicleEntity>>(
@@ -36,7 +37,12 @@ void main() {
       VehicleEntity(id: 1, plate: 'plate', color: 'color'),
       VehicleEntity(id: 2, plate: 'plate', color: 'color'),
     ];
-    final tResponse = VehiclesResponseEntity(total: 2, totalPages: 1, vehicles: tVehicles, page: 1);
+    final tResponse = VehiclesResponseEntity(
+      total: 2,
+      totalPages: 1,
+      vehicles: tVehicles,
+      page: 1,
+    );
 
     blocTest<SupervisorCubit, PaginatedState<VehicleEntity>>(
       'emits [success] when fetch() succeeds',
@@ -55,10 +61,14 @@ void main() {
         ),
       ],
       verify: (cubit) {
-        verify(mockSupervisorRepository.getVehicles(page: 1, limit: 10)).called(1);
+        verify(
+          mockSupervisorRepository.getVehicles(page: 1, limit: 10),
+        ).called(1);
         final state = cubit.state;
         expect(
-          state.whenOrNull(success: (items, currentPage, totalPages, isFetching) => items),
+          state.whenOrNull(
+            success: (items, currentPage, totalPages, isFetching) => items,
+          ),
           tVehicles,
         );
       },
@@ -73,10 +83,14 @@ void main() {
       act: (cubit) => cubit.fetch(refresh: true),
       expect: () => [
         PaginatedState<VehicleEntity>.loading(),
-        PaginatedState<VehicleEntity>.failure(errorMessage: 'Exception: Network error'),
+        PaginatedState<VehicleEntity>.failure(
+          errorMessage: 'Exception: Network error',
+        ),
       ],
       verify: (cubit) {
-        verify(mockSupervisorRepository.getVehicles(page: 1, limit: 10)).called(1);
+        verify(
+          mockSupervisorRepository.getVehicles(page: 1, limit: 10),
+        ).called(1);
         expect(
           cubit.state.whenOrNull(failure: (errorMessage) => errorMessage),
           'Exception: Network error',
@@ -87,7 +101,9 @@ void main() {
     blocTest<SupervisorCubit, PaginatedState<VehicleEntity>>(
       'accumulates items when fetching multiple pages',
       setUp: () {
-        final tVehiclesPage = [VehicleEntity(id: 1, plate: 'plate', color: 'color')];
+        final tVehiclesPage = [
+          VehicleEntity(id: 1, plate: 'plate', color: 'color'),
+        ];
         final tResponsePage = VehiclesResponseEntity(
           total: 3,
           totalPages: 2,
@@ -134,8 +150,12 @@ void main() {
         ),
       ],
       verify: (cubit) {
-        verify(mockSupervisorRepository.getVehicles(page: 1, limit: 10)).called(1);
-        verify(mockSupervisorRepository.getVehicles(page: 2, limit: 10)).called(1);
+        verify(
+          mockSupervisorRepository.getVehicles(page: 1, limit: 10),
+        ).called(1);
+        verify(
+          mockSupervisorRepository.getVehicles(page: 2, limit: 10),
+        ).called(1);
 
         final state = cubit.state.whenOrNull(
           success: (items, currentPage, totalPages, isFetching) => items,

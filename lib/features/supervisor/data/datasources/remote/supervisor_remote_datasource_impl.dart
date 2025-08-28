@@ -11,9 +11,14 @@ class SupervisorRemoteDatasourceImpl implements SupervisorRemoteDatasource {
   SupervisorRemoteDatasourceImpl({required this.apiClient});
 
   @override
-  Future<VehiclesResponseEntity> getVehicles({required int page, required int limit}) async {
+  Future<VehiclesResponseEntity> getVehicles({
+    required int page,
+    required int limit,
+  }) async {
     try {
-      final response = await apiClient.get('${ApiEndpoints.getVehicles}?page=$page&limit=$limit');
+      final response = await apiClient.get(
+        '${ApiEndpoints.getVehicles}?page=$page&limit=$limit',
+      );
 
       if (response == null || response.statusCode != 200) {
         throw Exception('Error fetching vehicles');

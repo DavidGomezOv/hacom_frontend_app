@@ -22,7 +22,9 @@ import 'package:hacom_frontend_app/features/supervisor/presentation/bloc/supervi
 final getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
-  getIt.registerLazySingleton<ApiClient>(() => ApiClient(baseUrl: dotenv.env['BASE_URL']!));
+  getIt.registerLazySingleton<ApiClient>(
+    () => ApiClient(baseUrl: dotenv.env['BASE_URL']!),
+  );
 
   // REMOTE DATA SOURCES
   getIt.registerLazySingleton<AuthRemoteDatasource>(
@@ -36,11 +38,16 @@ Future<void> initDependencies() async {
   );
 
   // LOCAL DATA SOURCES
-  getIt.registerLazySingleton<AuthLocalDatasource>(() => AuthLocalDatasourceImpl());
+  getIt.registerLazySingleton<AuthLocalDatasource>(
+    () => AuthLocalDatasourceImpl(),
+  );
 
   // REPOSITORIES
   getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(authRemoteDatasource: getIt(), authLocalDatasource: getIt()),
+    () => AuthRepositoryImpl(
+      authRemoteDatasource: getIt(),
+      authLocalDatasource: getIt(),
+    ),
   );
   getIt.registerLazySingleton<SupervisorRepository>(
     () => SupervisorRepositoryImpl(remoteDatasource: getIt()),
@@ -51,6 +58,8 @@ Future<void> initDependencies() async {
 
   // CUBITS
   getIt.registerFactory<AuthCubit>(() => AuthCubit(authRepository: getIt()));
-  getIt.registerFactory<SupervisorCubit>(() => SupervisorCubit(repository: getIt()));
+  getIt.registerFactory<SupervisorCubit>(
+    () => SupervisorCubit(repository: getIt()),
+  );
   getIt.registerFactory<PlacesCubit>(() => PlacesCubit(repository: getIt()));
 }

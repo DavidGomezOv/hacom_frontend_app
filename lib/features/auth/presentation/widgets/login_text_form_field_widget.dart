@@ -37,7 +37,9 @@ class LoginTextFormFieldWidget extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: hasError ? Colors.redAccent : Colors.blueGrey),
+                border: Border.all(
+                  color: hasError ? Colors.redAccent : Colors.blueGrey,
+                ),
               ),
               child: TextField(
                 controller: controller,
@@ -45,7 +47,8 @@ class LoginTextFormFieldWidget extends StatelessWidget {
                 keyboardType: keyboardType,
                 inputFormatters: [
                   if (inputFormatters != null) ...inputFormatters!,
-                  if (maxLength != null) LengthLimitingTextInputFormatter(maxLength),
+                  if (maxLength != null)
+                    LengthLimitingTextInputFormatter(maxLength),
                 ],
                 decoration: InputDecoration(
                   hintText: hintText,
@@ -60,7 +63,9 @@ class LoginTextFormFieldWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 4, left: 8),
                 child: Text(
                   state.errorText!,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.redAccent),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: Colors.redAccent),
                 ),
               ),
           ],

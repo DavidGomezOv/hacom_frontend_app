@@ -28,7 +28,11 @@ void main() {
     final router = GoRouter(
       initialLocation: '/',
       routes: [
-        GoRoute(path: '/', name: AppRouter.loginRouteName, builder: (_, __) => child),
+        GoRoute(
+          path: '/',
+          name: AppRouter.loginRouteName,
+          builder: (_, __) => child,
+        ),
         GoRoute(
           path: AppRouter.dashboardRoutePath,
           name: AppRouter.dashboardRouteName,
@@ -56,7 +60,9 @@ void main() {
       expect(find.text('Access'), findsOneWidget);
     });
 
-    testWidgets('shows loading indicator when state is loading', (tester) async {
+    testWidgets('shows loading indicator when state is loading', (
+      tester,
+    ) async {
       when(() => mockAuthCubit.state).thenReturn(const AuthState.loading());
 
       await tester.pumpWidget(
@@ -70,7 +76,9 @@ void main() {
     });
 
     testWidgets('navigates to dashboard on success state', (tester) async {
-      when(() => mockAuthCubit.stream).thenAnswer((_) => Stream.value(AuthState.success()));
+      when(
+        () => mockAuthCubit.stream,
+      ).thenAnswer((_) => Stream.value(AuthState.success()));
       when(() => mockAuthCubit.state).thenReturn(const AuthState.success());
 
       await tester.pumpWidget(
@@ -86,9 +94,11 @@ void main() {
     });
 
     testWidgets('shows SnackBar on failure state', (tester) async {
-      when(
-        () => mockAuthCubit.stream,
-      ).thenAnswer((_) => Stream.value(const AuthState.failure(errorMessage: 'Wrong credentials')));
+      when(() => mockAuthCubit.stream).thenAnswer(
+        (_) => Stream.value(
+          const AuthState.failure(errorMessage: 'Wrong credentials'),
+        ),
+      );
       when(
         () => mockAuthCubit.state,
       ).thenReturn(const AuthState.failure(errorMessage: 'Wrong credentials'));
@@ -105,7 +115,9 @@ void main() {
       expect(find.text('Login failed: Wrong credentials'), findsOneWidget);
     });
 
-    testWidgets('taps Access button calls cubit.login when form is valid', (tester) async {
+    testWidgets('taps Access button calls cubit.login when form is valid', (
+      tester,
+    ) async {
       when(() => mockAuthCubit.state).thenReturn(const AuthState.initial());
       when(
         () => mockAuthCubit.login(
@@ -122,11 +134,15 @@ void main() {
       );
 
       final accountField = find.byWidgetPredicate(
-        (widget) => widget is TextField && widget.decoration?.hintText == 'Account Name',
+        (widget) =>
+            widget is TextField &&
+            widget.decoration?.hintText == 'Account Name',
       );
       await tester.enterText(accountField, 'myaccount');
       final phoneField = find.byWidgetPredicate(
-        (widget) => widget is TextField && widget.decoration?.hintText == 'Phone Number',
+        (widget) =>
+            widget is TextField &&
+            widget.decoration?.hintText == 'Phone Number',
       );
       await tester.enterText(phoneField, '12345678');
 
@@ -134,31 +150,37 @@ void main() {
       await tester.pump();
 
       verify(
-        () => mockAuthCubit.login(accountName: 'myaccount', phoneNumber: '12345678'),
+        () => mockAuthCubit.login(
+          accountName: 'myaccount',
+          phoneNumber: '12345678',
+        ),
       ).called(1);
     });
 
-    testWidgets('taps Access button without filling the form shows error messages', (tester) async {
-      when(() => mockAuthCubit.state).thenReturn(const AuthState.initial());
-      when(
-        () => mockAuthCubit.login(
-          accountName: any(named: 'accountName'),
-          phoneNumber: any(named: 'phoneNumber'),
-        ),
-      ).thenAnswer((_) async {});
+    testWidgets(
+      'taps Access button without filling the form shows error messages',
+      (tester) async {
+        when(() => mockAuthCubit.state).thenReturn(const AuthState.initial());
+        when(
+          () => mockAuthCubit.login(
+            accountName: any(named: 'accountName'),
+            phoneNumber: any(named: 'phoneNumber'),
+          ),
+        ).thenAnswer((_) async {});
 
-      await tester.pumpWidget(
-        BlocProvider<AuthCubit>.value(
-          value: mockAuthCubit,
-          child: makeTestableWidget(const LoginPage()),
-        ),
-      );
+        await tester.pumpWidget(
+          BlocProvider<AuthCubit>.value(
+            value: mockAuthCubit,
+            child: makeTestableWidget(const LoginPage()),
+          ),
+        );
 
-      await tester.tap(find.text('Access'));
-      await tester.pump();
+        await tester.tap(find.text('Access'));
+        await tester.pump();
 
-      expect(find.text('Enter a valid Account Name'), findsOneWidget);
-      expect(find.text('Enter a valid Phone Number'), findsOneWidget);
-    });
+        expect(find.text('Enter a valid Account Name'), findsOneWidget);
+        expect(find.text('Enter a valid Phone Number'), findsOneWidget);
+      },
+    );
   });
 }

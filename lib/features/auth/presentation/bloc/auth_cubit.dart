@@ -11,7 +11,10 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit({required this.authRepository}) : super(const AuthState.initial());
 
-  Future<void> login({required String accountName, required String phoneNumber}) async {
+  Future<void> login({
+    required String accountName,
+    required String phoneNumber,
+  }) async {
     emit(AuthState.loading());
 
     final result = await authRepository.loginWithCredentials(
@@ -20,7 +23,11 @@ class AuthCubit extends Cubit<AuthState> {
     );
 
     result.fold(
-      (failure) => emit(AuthState.failure(errorMessage: 'An error has occurred,  try again later')),
+      (failure) => emit(
+        AuthState.failure(
+          errorMessage: 'An error has occurred,  try again later',
+        ),
+      ),
       (authorized) {
         if (authorized) {
           emit(AuthState.success());
@@ -36,15 +43,17 @@ class AuthCubit extends Cubit<AuthState> {
 
     final result = await authRepository.isAlreadyLoggedIn();
 
-    result.fold((failure) => emit(AuthState.failure(errorMessage: 'Error checking Login status')), (
-      isLoggedIn,
-    ) {
-      if (isLoggedIn) {
-        emit(AuthState.success());
-      } else {
-        emit(const AuthState.initial());
-      }
-    });
+    result.fold(
+      (failure) =>
+          emit(AuthState.failure(errorMessage: 'Error checking Login status')),
+      (isLoggedIn) {
+        if (isLoggedIn) {
+          emit(AuthState.success());
+        } else {
+          emit(const AuthState.initial());
+        }
+      },
+    );
   }
 
   Future<void> logout() async {

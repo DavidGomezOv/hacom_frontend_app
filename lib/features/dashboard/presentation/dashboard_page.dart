@@ -12,8 +12,9 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocListener<AuthCubit, AuthState>(
-    listener: (context, state) =>
-        state.whenOrNull(logout: () => context.goNamed(AppRouter.loginRouteName)),
+    listener: (context, state) => state.whenOrNull(
+      logout: () => context.goNamed(AppRouter.loginRouteName),
+    ),
     child: BasePage(
       pageTitle: 'Welcome!',
       pageDescription: 'Please select what you want to do today.',
@@ -23,17 +24,20 @@ class DashboardPage extends StatelessWidget {
         children: [
           DashboardItemButtonWidget(
             buttonTitle: 'Supervisor',
-            buttonDescription: 'This is a short description of the supervisor menu.',
+            buttonDescription:
+                'This is a short description of the supervisor menu.',
             onPressed: () => context.goNamed(AppRouter.supervisorRouteName),
           ),
           DashboardItemButtonWidget(
             buttonTitle: 'Notifications',
-            buttonDescription: 'This is a short description of the supervisor menu.',
+            buttonDescription:
+                'This is a short description of the supervisor menu.',
             onPressed: () {},
           ),
           DashboardItemButtonWidget(
             buttonTitle: 'Places',
-            buttonDescription: 'This is a short description of the supervisor menu.',
+            buttonDescription:
+                'This is a short description of the supervisor menu.',
             onPressed: () => context.goNamed(AppRouter.placesRouteName),
           ),
           Spacer(),
@@ -50,7 +54,8 @@ class DashboardPage extends StatelessWidget {
 
   void _showLogoutConfirmationDialog(BuildContext context) => showDialog(
     context: context,
-    builder: (context) =>
-        LogoutConfirmationDialog(onPrimaryButtonPressed: () => context.read<AuthCubit>().logout()),
+    builder: (context) => LogoutConfirmationDialog(
+      onPrimaryButtonPressed: () => context.read<AuthCubit>().logout(),
+    ),
   );
 }

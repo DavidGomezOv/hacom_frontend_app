@@ -30,7 +30,10 @@ void main() {
   group('AuthRepositoryImpl loginWithCredentials() Tests', () {
     test('returns Right(true) when login succeeds with token', () async {
       when(
-        mockAuthRemoteDatasource.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
+        mockAuthRemoteDatasource.login(
+          accountName: tAccountName,
+          phoneNumber: tPhoneNumber,
+        ),
       ).thenAnswer((_) async => tToken);
       when(mockAuthLocalDatasource.saveToken(tToken)).thenAnswer((_) async {});
 
@@ -45,7 +48,10 @@ void main() {
 
     test('returns Right(false) when login returns null', () async {
       when(
-        mockAuthRemoteDatasource.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
+        mockAuthRemoteDatasource.login(
+          accountName: tAccountName,
+          phoneNumber: tPhoneNumber,
+        ),
       ).thenAnswer((_) async => null);
 
       final result = await repository.loginWithCredentials(
@@ -59,7 +65,10 @@ void main() {
 
     test('returns Left(ServerFailure) when login throws exception', () async {
       when(
-        mockAuthRemoteDatasource.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
+        mockAuthRemoteDatasource.login(
+          accountName: tAccountName,
+          phoneNumber: tPhoneNumber,
+        ),
       ).thenThrow(Exception('network error'));
 
       final result = await repository.loginWithCredentials(
@@ -74,7 +83,9 @@ void main() {
 
   group('AuthRepositoryImpl isAlreadyLoggedIn() Tests', () {
     test('returns Right(true) and sets token if token is valid', () async {
-      when(mockAuthLocalDatasource.hasValidToken()).thenAnswer((_) async => true);
+      when(
+        mockAuthLocalDatasource.hasValidToken(),
+      ).thenAnswer((_) async => true);
       when(mockAuthLocalDatasource.getToken()).thenAnswer((_) async => tToken);
       when(
         mockAuthRemoteDatasource.setTokenFromLocalSource(token: tToken),
@@ -83,11 +94,15 @@ void main() {
       final result = await repository.isAlreadyLoggedIn();
 
       expect(result, const Right(true));
-      verify(mockAuthRemoteDatasource.setTokenFromLocalSource(token: tToken)).called(1);
+      verify(
+        mockAuthRemoteDatasource.setTokenFromLocalSource(token: tToken),
+      ).called(1);
     });
 
     test('returns Right(false) and deletes token if not valid', () async {
-      when(mockAuthLocalDatasource.hasValidToken()).thenAnswer((_) async => false);
+      when(
+        mockAuthLocalDatasource.hasValidToken(),
+      ).thenAnswer((_) async => false);
       when(mockAuthLocalDatasource.deleteToken()).thenAnswer((_) async {});
 
       final result = await repository.isAlreadyLoggedIn();
@@ -97,7 +112,9 @@ void main() {
     });
 
     test('returns Left(ServerFailure) when datasource throws', () async {
-      when(mockAuthLocalDatasource.hasValidToken()).thenThrow(Exception('storage error'));
+      when(
+        mockAuthLocalDatasource.hasValidToken(),
+      ).thenThrow(Exception('storage error'));
 
       final result = await repository.isAlreadyLoggedIn();
 
@@ -117,7 +134,9 @@ void main() {
     });
 
     test('returns Left(ServerFailure) when deleteToken throws', () async {
-      when(mockAuthLocalDatasource.deleteToken()).thenThrow(Exception('cannot delete'));
+      when(
+        mockAuthLocalDatasource.deleteToken(),
+      ).thenThrow(Exception('cannot delete'));
 
       final result = await repository.logout();
 

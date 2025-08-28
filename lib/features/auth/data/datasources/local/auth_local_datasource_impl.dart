@@ -25,7 +25,8 @@ class AuthLocalDatasourceImpl implements AuthLocalDatasource {
   }
 
   @override
-  Future<void> deleteToken() async => await _secureStorage.delete(key: _tokenKey);
+  Future<void> deleteToken() async =>
+      await _secureStorage.delete(key: _tokenKey);
 
   @override
   Future<bool> hasValidToken() async {

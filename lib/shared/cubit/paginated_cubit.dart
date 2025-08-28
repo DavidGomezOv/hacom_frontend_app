@@ -6,13 +6,15 @@ part 'paginated_state.dart';
 
 part 'paginated_cubit.freezed.dart';
 
-typedef FetchPage<T> = Future<PaginatedResponse<T>> Function(int page, int limit);
+typedef FetchPage<T> =
+    Future<PaginatedResponse<T>> Function(int page, int limit);
 
 class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
   final FetchPage<T> fetchPage;
   final int limit;
 
-  PaginatedCubit({required this.fetchPage, this.limit = 10}) : super(PaginatedState.initial());
+  PaginatedCubit({required this.fetchPage, this.limit = 10})
+    : super(PaginatedState.initial());
 
   Future<void> fetch({bool refresh = false}) async {
     if (refresh) {
@@ -35,7 +37,8 @@ class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
     final pageToFetch = refresh
         ? 1
         : state.maybeWhen(
-            success: (items, currentPage, totalPages, isFetching) => currentPage + 1,
+            success: (items, currentPage, totalPages, isFetching) =>
+                currentPage + 1,
             orElse: () => 1,
           );
 

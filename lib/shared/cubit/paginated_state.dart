@@ -13,5 +13,6 @@ class PaginatedState<T> with _$PaginatedState<T> {
     @Default(false) bool isFetching,
   }) = _Success;
 
-  const factory PaginatedState.failure({required String errorMessage}) = _Failure;
+  const factory PaginatedState.failure({required String errorMessage}) =
+      _Failure;
 }

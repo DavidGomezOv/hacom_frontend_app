@@ -16,7 +16,9 @@ void main() {
 
   setUp(() {
     mockApiClient = MockApiClient();
-    authRemoteDatasourceImpl = AuthRemoteDatasourceImpl(apiClient: mockApiClient);
+    authRemoteDatasourceImpl = AuthRemoteDatasourceImpl(
+      apiClient: mockApiClient,
+    );
     clearInteractions(mockApiClient);
   });
 
@@ -58,27 +60,35 @@ void main() {
       verifyNever(mockApiClient.setToken(tToken));
     });
 
-    test('success api call returns null when response status is not 200', () async {
-      final responseBody = jsonEncode({'token': tToken});
+    test(
+      'success api call returns null when response status is not 200',
+      () async {
+        final responseBody = jsonEncode({'token': tToken});
 
-      when(
-        mockApiClient.post(ApiEndpoints.login, loginRequestParams),
-      ).thenAnswer((_) async => http.Response(responseBody, 401));
+        when(
+          mockApiClient.post(ApiEndpoints.login, loginRequestParams),
+        ).thenAnswer((_) async => http.Response(responseBody, 401));
 
-      final result = await authRemoteDatasourceImpl.login(
-        accountName: tAccountName,
-        phoneNumber: tPhoneNumber,
-      );
+        final result = await authRemoteDatasourceImpl.login(
+          accountName: tAccountName,
+          phoneNumber: tPhoneNumber,
+        );
 
-      expect(result, null);
-      verifyNever(mockApiClient.setToken(any));
-    });
+        expect(result, null);
+        verifyNever(mockApiClient.setToken(any));
+      },
+    );
 
     test('failure api call throws exception when ApiClient throws', () async {
-      when(mockApiClient.post(ApiEndpoints.login, loginRequestParams)).thenThrow(Exception('Network error'));
+      when(
+        mockApiClient.post(ApiEndpoints.login, loginRequestParams),
+      ).thenThrow(Exception('Network error'));
 
       expect(
-        () => authRemoteDatasourceImpl.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
+        () => authRemoteDatasourceImpl.login(
+          accountName: tAccountName,
+          phoneNumber: tPhoneNumber,
+        ),
         throwsA(isA<String>()),
       );
 

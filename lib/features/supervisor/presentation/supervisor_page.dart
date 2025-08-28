@@ -27,7 +27,8 @@ class SupervisorPage extends StatelessWidget {
       ),
       content: BlocBuilder<SupervisorCubit, PaginatedState<VehicleEntity>>(
         builder: (context, state) => state.maybeWhen(
-          failure: (errorMessage) => Center(child: Text('Error: $errorMessage')),
+          failure: (errorMessage) =>
+              Center(child: Text('Error: $errorMessage')),
           success: (items, currentPage, totalPages, isFetching) {
             final canFetchMore = currentPage < totalPages;
             return Column(
@@ -37,7 +38,9 @@ class SupervisorPage extends StatelessWidget {
                 CommonButton(
                   onPressed: () => context.pushNamed(
                     AppRouter.mapRouteName,
-                    extra: items.map((vehicle) => vehicle.toMapMarkerEntity).toList(),
+                    extra: items
+                        .map((vehicle) => vehicle.toMapMarkerEntity)
+                        .toList(),
                   ),
                   buttonLabel: 'View all on Map',
                 ),
@@ -45,7 +48,8 @@ class SupervisorPage extends StatelessWidget {
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (scrollInfo) {
                       if (!isFetching &&
-                          scrollInfo.metrics.pixels >= (scrollInfo.metrics.maxScrollExtent - 200) &&
+                          scrollInfo.metrics.pixels >=
+                              (scrollInfo.metrics.maxScrollExtent - 200) &&
                           canFetchMore) {
                         context.read<SupervisorCubit>().fetch();
                       }

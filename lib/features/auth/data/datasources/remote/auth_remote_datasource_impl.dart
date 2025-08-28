@@ -10,7 +10,10 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   AuthRemoteDatasourceImpl({required this.apiClient});
 
   @override
-  Future<String?> login({required String accountName, required int phoneNumber}) async {
+  Future<String?> login({
+    required String accountName,
+    required int phoneNumber,
+  }) async {
     try {
       final response = await apiClient.post(ApiEndpoints.login, {
         "phone": phoneNumber,

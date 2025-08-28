@@ -15,7 +15,10 @@ class SupervisorRepositoryImpl implements SupervisorRepository {
     required int limit,
   }) async {
     try {
-      final response = await remoteDatasource.getVehicles(page: page, limit: limit);
+      final response = await remoteDatasource.getVehicles(
+        page: page,
+        limit: limit,
+      );
       return Right(response);
     } catch (e) {
       return Left(ServerFailure(errorMessage: e.toString()));

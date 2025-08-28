@@ -3,7 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:hacom_frontend_app/shared/widgets/common_button.dart';
 
 class LogoutConfirmationDialog extends StatelessWidget {
-  const LogoutConfirmationDialog({super.key, required this.onPrimaryButtonPressed});
+  const LogoutConfirmationDialog({
+    super.key,
+    required this.onPrimaryButtonPressed,
+  });
 
   final Function() onPrimaryButtonPressed;
 
@@ -17,11 +20,20 @@ class LogoutConfirmationDialog extends StatelessWidget {
       children: [
         Text(
           'Attention!',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
-        Text('Are you sure you want to Logout?', style: Theme.of(context).textTheme.bodyLarge),
+        Text(
+          'Are you sure you want to Logout?',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
         SizedBox(height: 10),
-        CommonButton(onPressed: onPrimaryButtonPressed, buttonLabel: 'Yes', isOutlined: false),
+        CommonButton(
+          onPressed: onPrimaryButtonPressed,
+          buttonLabel: 'Yes',
+          isOutlined: false,
+        ),
         CommonButton(onPressed: () => context.pop(), buttonLabel: 'No'),
       ],
     ),

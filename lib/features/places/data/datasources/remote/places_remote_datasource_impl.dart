@@ -11,9 +11,14 @@ class PlacesRemoteDatasourceImpl implements PlacesRemoteDatasource {
   PlacesRemoteDatasourceImpl({required this.apiClient});
 
   @override
-  Future<PlacesResponseEntity> getPlaces({required int page, required int limit}) async {
+  Future<PlacesResponseEntity> getPlaces({
+    required int page,
+    required int limit,
+  }) async {
     try {
-      final response = await apiClient.get('${ApiEndpoints.getPlaces}?page=$page&limit=$limit');
+      final response = await apiClient.get(
+        '${ApiEndpoints.getPlaces}?page=$page&limit=$limit',
+      );
 
       if (response == null || response.statusCode != 200) {
         throw Exception('Error fetching vehicles');

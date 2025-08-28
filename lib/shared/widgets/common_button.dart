@@ -26,9 +26,13 @@ class CommonButton extends StatelessWidget {
               : BorderSide.none,
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        backgroundColor: isOutlined ? Colors.white : Theme.of(context).colorScheme.primary,
+        backgroundColor: isOutlined
+            ? Colors.white
+            : Theme.of(context).colorScheme.primary,
         textStyle: Theme.of(context).textTheme.bodyLarge,
-        foregroundColor: isOutlined ? Theme.of(context).colorScheme.primary : Colors.white,
+        foregroundColor: isOutlined
+            ? Theme.of(context).colorScheme.primary
+            : Colors.white,
       ),
       child: Container(
         padding: EdgeInsets.all(6),

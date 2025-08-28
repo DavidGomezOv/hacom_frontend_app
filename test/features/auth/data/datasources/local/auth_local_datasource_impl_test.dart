@@ -14,27 +14,39 @@ void main() {
 
   setUp(() {
     mockFlutterSecureStorage = MockFlutterSecureStorage();
-    authLocalDatasourceImpl = AuthLocalDatasourceImpl(secureStorage: mockFlutterSecureStorage);
+    authLocalDatasourceImpl = AuthLocalDatasourceImpl(
+      secureStorage: mockFlutterSecureStorage,
+    );
   });
 
   const tToken = 'fake_jwt_token';
   const tokenKey = 'auth_token';
 
-  test('saveToken calls secureStorage.write with correct key and value', () async {
-    when(
-      () => mockFlutterSecureStorage.write(key: tokenKey, value: tToken),
-    ).thenAnswer((_) async {});
+  test(
+    'saveToken calls secureStorage.write with correct key and value',
+    () async {
+      when(
+        () => mockFlutterSecureStorage.write(key: tokenKey, value: tToken),
+      ).thenAnswer((_) async {});
 
-    await authLocalDatasourceImpl.saveToken(tToken);
+      await authLocalDatasourceImpl.saveToken(tToken);
 
-    verify(() => mockFlutterSecureStorage.write(key: tokenKey, value: tToken)).called(1);
-  });
+      verify(
+        () => mockFlutterSecureStorage.write(key: tokenKey, value: tToken),
+      ).called(1);
+    },
+  );
 
-  test('saveToken calls secureStorage.write with correct key and value', () async {
-    when(() => mockFlutterSecureStorage.delete(key: tokenKey)).thenAnswer((_) async {});
+  test(
+    'saveToken calls secureStorage.write with correct key and value',
+    () async {
+      when(
+        () => mockFlutterSecureStorage.delete(key: tokenKey),
+      ).thenAnswer((_) async {});
 
-    await authLocalDatasourceImpl.deleteToken();
+      await authLocalDatasourceImpl.deleteToken();
 
-    verify(() => mockFlutterSecureStorage.delete(key: tokenKey)).called(1);
-  });
+      verify(() => mockFlutterSecureStorage.delete(key: tokenKey)).called(1);
+    },
+  );
 }

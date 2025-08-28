@@ -16,7 +16,8 @@ abstract class VehicleEntity with _$VehicleEntity {
     double? longitude,
   }) = _VehicleEntity;
 
-  factory VehicleEntity.fromJson(Map<String, dynamic> json) => _$VehicleEntityFromJson(json);
+  factory VehicleEntity.fromJson(Map<String, dynamic> json) =>
+      _$VehicleEntityFromJson(json);
 }
 
 extension VehicleEntityExtension on VehicleEntity {

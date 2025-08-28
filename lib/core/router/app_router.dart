@@ -33,7 +33,10 @@ class AppRouter {
   static GoRouter generateRouter = GoRouter(
     initialLocation: splashRoutePath,
     routes: [
-      GoRoute(path: splashRoutePath, builder: (context, state) => const SplashPage()),
+      GoRoute(
+        path: splashRoutePath,
+        builder: (context, state) => const SplashPage(),
+      ),
       GoRoute(
         path: loginRoutePath,
         name: loginRouteName,

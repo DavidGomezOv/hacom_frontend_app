@@ -31,7 +31,9 @@ class DashboardItemButtonWidget extends StatelessWidget {
           children: [
             Text(
               buttonTitle,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             if (buttonDescription != null && buttonDescription!.isNotEmpty)
               Text(buttonDescription!),

@@ -42,7 +42,8 @@ void main() {
         ),
       ).thenAnswer((_) async => const Right(true)),
       build: getAuthCubit,
-      act: (cubit) => cubit.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
+      act: (cubit) =>
+          cubit.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
       expect: () => [const AuthState.loading(), const AuthState.success()],
       verify: (cubit) {
         verify(
@@ -64,7 +65,8 @@ void main() {
         ),
       ).thenAnswer((_) async => const Right(false)),
       build: getAuthCubit,
-      act: (cubit) => cubit.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
+      act: (cubit) =>
+          cubit.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
       expect: () => [
         const AuthState.loading(),
         const AuthState.failure(errorMessage: 'Wrong credentials'),
@@ -76,23 +78,32 @@ void main() {
             phoneNumber: int.parse(tPhoneNumber),
           ),
         ).called(1);
-        expect(cubit.state, const AuthState.failure(errorMessage: 'Wrong credentials'));
+        expect(
+          cubit.state,
+          const AuthState.failure(errorMessage: 'Wrong credentials'),
+        );
       },
     );
 
     blocTest<AuthCubit, AuthState>(
       'emits [loading, failure(generic error)] when login throws',
-      setUp: () => when(
-        mockAuthRepository.loginWithCredentials(
-          accountName: anyNamed('accountName'),
-          phoneNumber: anyNamed('phoneNumber'),
-        ),
-      ).thenAnswer((_) async => Left(ServerFailure(errorMessage: 'network error'))),
+      setUp: () =>
+          when(
+            mockAuthRepository.loginWithCredentials(
+              accountName: anyNamed('accountName'),
+              phoneNumber: anyNamed('phoneNumber'),
+            ),
+          ).thenAnswer(
+            (_) async => Left(ServerFailure(errorMessage: 'network error')),
+          ),
       build: getAuthCubit,
-      act: (cubit) => cubit.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
+      act: (cubit) =>
+          cubit.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
       expect: () => [
         const AuthState.loading(),
-        const AuthState.failure(errorMessage: 'An error has occurred,  try again later'),
+        const AuthState.failure(
+          errorMessage: 'An error has occurred,  try again later',
+        ),
       ],
       verify: (cubit) {
         verify(
@@ -103,7 +114,9 @@ void main() {
         ).called(1);
         expect(
           cubit.state,
-          const AuthState.failure(errorMessage: 'An error has occurred,  try again later'),
+          const AuthState.failure(
+            errorMessage: 'An error has occurred,  try again later',
+          ),
         );
       },
     );
@@ -112,8 +125,9 @@ void main() {
   group('AuthCubit checkLoginStatus() Tests', () {
     blocTest<AuthCubit, AuthState>(
       'emits [loading, success] when already logged in',
-      setUp: () =>
-          when(mockAuthRepository.isAlreadyLoggedIn()).thenAnswer((_) async => const Right(true)),
+      setUp: () => when(
+        mockAuthRepository.isAlreadyLoggedIn(),
+      ).thenAnswer((_) async => const Right(true)),
       build: getAuthCubit,
       act: (cubit) => cubit.checkLoginStatus(),
       expect: () => [const AuthState.loading(), const AuthState.success()],
@@ -125,8 +139,9 @@ void main() {
 
     blocTest<AuthCubit, AuthState>(
       'emits [loading, initial] when not logged in',
-      setUp: () =>
-          when(mockAuthRepository.isAlreadyLoggedIn()).thenAnswer((_) async => const Right(false)),
+      setUp: () => when(
+        mockAuthRepository.isAlreadyLoggedIn(),
+      ).thenAnswer((_) async => const Right(false)),
       build: getAuthCubit,
       act: (cubit) => cubit.checkLoginStatus(),
       expect: () => [const AuthState.loading(), const AuthState.initial()],
@@ -138,9 +153,9 @@ void main() {
 
     blocTest<AuthCubit, AuthState>(
       'emits [loading, failure] when checkLoginStatus throws',
-      setUp: () => when(
-        mockAuthRepository.isAlreadyLoggedIn(),
-      ).thenAnswer((_) async => Left(ServerFailure(errorMessage: 'storage error'))),
+      setUp: () => when(mockAuthRepository.isAlreadyLoggedIn()).thenAnswer(
+        (_) async => Left(ServerFailure(errorMessage: 'storage error')),
+      ),
       build: getAuthCubit,
       act: (cubit) => cubit.checkLoginStatus(),
       expect: () => [
@@ -149,7 +164,10 @@ void main() {
       ],
       verify: (cubit) {
         verify(mockAuthRepository.isAlreadyLoggedIn()).called(1);
-        expect(cubit.state, const AuthState.failure(errorMessage: 'Error checking Login status'));
+        expect(
+          cubit.state,
+          const AuthState.failure(errorMessage: 'Error checking Login status'),
+        );
       },
     );
   });
@@ -157,7 +175,9 @@ void main() {
   group('AuthCubit logout() Tests', () {
     blocTest<AuthCubit, AuthState>(
       'emits [loading, logout] when logout succeeds',
-      setUp: () => when(mockAuthRepository.logout()).thenAnswer((_) async => const Right(null)),
+      setUp: () => when(
+        mockAuthRepository.logout(),
+      ).thenAnswer((_) async => const Right(null)),
       build: getAuthCubit,
       act: (cubit) => cubit.logout(),
       expect: () => [const AuthState.loading(), const AuthState.logout()],
@@ -169,9 +189,9 @@ void main() {
 
     blocTest<AuthCubit, AuthState>(
       'emits [loading, failure] when logout fails',
-      setUp: () => when(
-        mockAuthRepository.logout(),
-      ).thenAnswer((_) async => Left(ServerFailure(errorMessage: 'logout error'))),
+      setUp: () => when(mockAuthRepository.logout()).thenAnswer(
+        (_) async => Left(ServerFailure(errorMessage: 'logout error')),
+      ),
       build: getAuthCubit,
       act: (cubit) => cubit.logout(),
       expect: () => [
@@ -180,7 +200,10 @@ void main() {
       ],
       verify: (cubit) {
         verify(mockAuthRepository.logout()).called(1);
-        expect(cubit.state, const AuthState.failure(errorMessage: 'Logout error'));
+        expect(
+          cubit.state,
+          const AuthState.failure(errorMessage: 'Logout error'),
+        );
       },
     );
   });

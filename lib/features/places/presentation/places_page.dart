@@ -26,7 +26,8 @@ class PlacesPage extends StatelessWidget {
       ),
       content: BlocBuilder<PlacesCubit, PaginatedState<PlaceEntity>>(
         builder: (context, state) => state.maybeWhen(
-          failure: (errorMessage) => Center(child: Text('Error: $errorMessage')),
+          failure: (errorMessage) =>
+              Center(child: Text('Error: $errorMessage')),
           success: (items, currentPage, totalPages, isFetching) {
             final canFetchMore = currentPage < totalPages;
             return Column(
@@ -36,7 +37,9 @@ class PlacesPage extends StatelessWidget {
                 CommonButton(
                   onPressed: () => context.pushNamed(
                     AppRouter.mapRouteName,
-                    extra: items.map((place) => place.toMapMarkerEntity).toList(),
+                    extra: items
+                        .map((place) => place.toMapMarkerEntity)
+                        .toList(),
                   ),
                   buttonLabel: 'View all on Map',
                 ),
@@ -44,7 +47,8 @@ class PlacesPage extends StatelessWidget {
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (scrollInfo) {
                       if (!isFetching &&
-                          scrollInfo.metrics.pixels >= (scrollInfo.metrics.maxScrollExtent - 200) &&
+                          scrollInfo.metrics.pixels >=
+                              (scrollInfo.metrics.maxScrollExtent - 200) &&
                           canFetchMore) {
                         context.read<PlacesCubit>().fetch();
                       }

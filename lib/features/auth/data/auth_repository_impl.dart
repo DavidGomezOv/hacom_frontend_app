@@ -8,7 +8,10 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDatasource authRemoteDatasource;
   final AuthLocalDatasource authLocalDatasource;
 
-  AuthRepositoryImpl({required this.authRemoteDatasource, required this.authLocalDatasource});
+  AuthRepositoryImpl({
+    required this.authRemoteDatasource,
+    required this.authLocalDatasource,
+  });
 
   @override
   Future<Either<Failure, bool>> loginWithCredentials({

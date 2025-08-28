@@ -20,5 +20,9 @@ class ApiClient {
       http.get(Uri.parse("$baseUrl$endpoint"), headers: _headers());
 
   Future<http.Response?> post(String endpoint, Map<String, dynamic> body) =>
-      http.post(Uri.parse("$baseUrl$endpoint"), headers: _headers(), body: jsonEncode(body));
+      http.post(
+        Uri.parse("$baseUrl$endpoint"),
+        headers: _headers(),
+        body: jsonEncode(body),
+      );
 }

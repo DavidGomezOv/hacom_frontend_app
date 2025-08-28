@@ -16,7 +16,8 @@ abstract class PlaceEntity with _$PlaceEntity {
     double? longitude,
   }) = _PlaceEntity;
 
-  factory PlaceEntity.fromJson(Map<String, dynamic> json) => _$PlaceEntityFromJson(json);
+  factory PlaceEntity.fromJson(Map<String, dynamic> json) =>
+      _$PlaceEntityFromJson(json);
 }
 
 extension PlaceEntityExtension on PlaceEntity {

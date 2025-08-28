@@ -24,7 +24,8 @@ class InfiniteScrollListWithPagination<T> extends StatelessWidget {
       onNotification: (scrollInfo) {
         if (!isFetching &&
             canFetchMore &&
-            scrollInfo.metrics.pixels >= (scrollInfo.metrics.maxScrollExtent - scrollOffset)) {
+            scrollInfo.metrics.pixels >=
+                (scrollInfo.metrics.maxScrollExtent - scrollOffset)) {
           onFetchMore();
         }
         return false;

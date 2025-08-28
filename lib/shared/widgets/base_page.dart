@@ -39,9 +39,9 @@ class BasePage extends StatelessWidget {
                   ),
                 Text(
                   pageTitle,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Spacer(),
                 if (leading != null) leading!,
@@ -50,7 +50,9 @@ class BasePage extends StatelessWidget {
             if (pageDescription != null)
               Text(
                 pageDescription!,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 20),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontSize: 20),
               ),
             SizedBox(height: 30),
             Flexible(child: content),

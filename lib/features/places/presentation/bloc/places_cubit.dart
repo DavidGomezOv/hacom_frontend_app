@@ -13,8 +13,10 @@ class PlacesCubit extends PaginatedCubit<PlaceEntity> {
 
           return result.fold(
             (failure) => throw Exception(failure),
-            (response) =>
-                PaginatedResponse(items: response.places, totalPages: response.totalPages),
+            (response) => PaginatedResponse(
+              items: response.places,
+              totalPages: response.totalPages,
+            ),
           );
         },
       );

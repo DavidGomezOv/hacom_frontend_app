@@ -28,13 +28,17 @@ class _LoginPageState extends State<LoginPage> {
         listener: (context, state) {
           state.whenOrNull(
             success: () => context.goNamed(AppRouter.dashboardRouteName),
-            failure: (errorMessage) => ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text("Login failed: $errorMessage"))),
+            failure: (errorMessage) =>
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Login failed: $errorMessage")),
+                ),
           );
         },
         builder: (context, state) {
-          final isLoading = state.maybeWhen(loading: () => true, orElse: () => false);
+          final isLoading = state.maybeWhen(
+            loading: () => true,
+            orElse: () => false,
+          );
           return Center(
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -45,9 +49,9 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Text(
                     'LIVETrack',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text('Personal and Delivery Management'),
                   SizedBox(height: 20),
@@ -64,20 +68,24 @@ class _LoginPageState extends State<LoginPage> {
                             value,
                             'Enter a valid Account Name',
                             minLength: 4,
-                            minLengthErrorMessage: 'Account Name should be 4 digits length minimum',
+                            minLengthErrorMessage:
+                                'Account Name should be 4 digits length minimum',
                           ),
                         ),
                         LoginTextFormFieldWidget(
                           controller: phoneController,
                           hintText: 'Phone Number',
                           keyboardType: TextInputType.number,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                           maxLength: 8,
                           validator: (value) => FormValidators.commonValidator(
                             value,
                             'Enter a valid Phone Number',
                             minLength: 8,
-                            minLengthErrorMessage: 'Phone Number should be 8 digits length',
+                            minLengthErrorMessage:
+                                'Phone Number should be 8 digits length',
                           ),
                         ),
                         CommonButton(
@@ -85,7 +93,8 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: isLoading
                               ? null
                               : () {
-                                  if (_formKey.currentState?.validate() ?? false) {
+                                  if (_formKey.currentState?.validate() ??
+                                      false) {
                                     context.read<AuthCubit>().login(
                                       accountName: accountController.text,
                                       phoneNumber: phoneController.text,
