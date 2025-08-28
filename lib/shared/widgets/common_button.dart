@@ -6,20 +6,30 @@ class CommonButton extends StatelessWidget {
     this.isLoading = false,
     required this.onPressed,
     required this.buttonLabel,
+    this.isOutlined = false,
   });
 
   final VoidCallback? onPressed;
   final bool isLoading;
   final String buttonLabel;
+  final bool isOutlined;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: FilledButton(
+      child: ElevatedButton(
         onPressed: onPressed,
-        style: FilledButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            side: isOutlined
+                ? BorderSide(color: Theme.of(context).colorScheme.primary)
+                : BorderSide.none,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          backgroundColor: isOutlined ? Colors.white : Theme.of(context).colorScheme.primary,
+          textStyle: Theme.of(context).textTheme.bodyLarge,
+          foregroundColor: isOutlined ? Theme.of(context).colorScheme.primary : Colors.white,
         ),
         child: Container(
           padding: EdgeInsets.all(6),

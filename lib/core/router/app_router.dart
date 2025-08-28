@@ -1,11 +1,10 @@
 import 'package:go_router/go_router.dart';
-import 'package:hacom_frontend_app/core/services/location_service.dart';
 import 'package:hacom_frontend_app/features/auth/presentation/login_page.dart';
-import 'package:hacom_frontend_app/features/core/presentation/splash_page.dart';
 import 'package:hacom_frontend_app/features/dashboard/presentation/dashboard_page.dart';
 import 'package:hacom_frontend_app/features/map/domain/entities/map_marker_entity.dart';
 import 'package:hacom_frontend_app/features/map/presentation/map_page.dart';
 import 'package:hacom_frontend_app/features/places/presentation/places_page.dart';
+import 'package:hacom_frontend_app/features/splash/presentation/splash_page.dart';
 import 'package:hacom_frontend_app/features/supervisor/presentation/supervisor_page.dart';
 
 class AppRouter {

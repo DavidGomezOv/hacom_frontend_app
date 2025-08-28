@@ -34,6 +34,7 @@ migrate_working_dir/
 /coverage/
 **.freezed.dart
 **.g.dart
+**.mocks.dart
 
 # Symbolication related
 app.*.symbols

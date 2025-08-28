@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacom_frontend_app/core/router/app_router.dart';
-import 'package:hacom_frontend_app/features/map/domain/entities/map_marker_entity.dart';
 import 'package:hacom_frontend_app/features/supervisor/domain/entities/vehicle_entity.dart';
 import 'package:hacom_frontend_app/features/supervisor/presentation/bloc/supervisor_cubit.dart';
 import 'package:hacom_frontend_app/shared/cubit/paginated_cubit.dart';
