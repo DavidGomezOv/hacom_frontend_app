@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:hacom_frontend_app/core/network/api_client.dart';
+import 'package:hacom_frontend_app/core/network/api_endpoints.dart';
 import 'package:hacom_frontend_app/features/places/data/datasources/remote/places_remote_datasource.dart';
 import 'package:hacom_frontend_app/features/places/domain/entities/places_response_entity.dart';
 
@@ -12,7 +13,7 @@ class PlacesRemoteDatasourceImpl implements PlacesRemoteDatasource {
   @override
   Future<PlacesResponseEntity> getPlaces({required int page, required int limit}) async {
     try {
-      final response = await apiClient.get('/getPlaces?page=$page&limit=$limit');
+      final response = await apiClient.get('${ApiEndpoints.getPlaces}?page=$page&limit=$limit');
 
       if (response == null || response.statusCode != 200) {
         throw Exception('Error fetching vehicles');

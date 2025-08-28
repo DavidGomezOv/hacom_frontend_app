@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:hacom_frontend_app/core/network/api_client.dart';
+import 'package:hacom_frontend_app/core/network/api_endpoints.dart';
 import 'auth_remote_datasource.dart';
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -11,7 +12,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   @override
   Future<String?> login({required String accountName, required int phoneNumber}) async {
     try {
-      final response = await apiClient.post("/login", {
+      final response = await apiClient.post(ApiEndpoints.login, {
         "phone": phoneNumber,
         "account": accountName,
       });

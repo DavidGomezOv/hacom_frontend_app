@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacom_frontend_app/core/network/api_client.dart';
+import 'package:hacom_frontend_app/core/network/api_endpoints.dart';
 import 'package:hacom_frontend_app/features/auth/data/datasources/remote/auth_remote_datasource_impl.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
@@ -29,7 +30,7 @@ void main() {
       final responseBody = jsonEncode({'token': tToken});
 
       when(
-        mockApiClient.post("/login", loginRequestParams),
+        mockApiClient.post(ApiEndpoints.login, loginRequestParams),
       ).thenAnswer((_) async => http.Response(responseBody, 200));
 
       final result = await authRemoteDatasourceImpl.login(
@@ -45,7 +46,7 @@ void main() {
       final responseBody = jsonEncode({'message': "Invalid credentials"});
 
       when(
-        mockApiClient.post("/login", loginRequestParams),
+        mockApiClient.post(ApiEndpoints.login, loginRequestParams),
       ).thenAnswer((_) async => http.Response(responseBody, 200));
 
       final result = await authRemoteDatasourceImpl.login(
@@ -61,7 +62,7 @@ void main() {
       final responseBody = jsonEncode({'token': tToken});
 
       when(
-        mockApiClient.post("/login", loginRequestParams),
+        mockApiClient.post(ApiEndpoints.login, loginRequestParams),
       ).thenAnswer((_) async => http.Response(responseBody, 401));
 
       final result = await authRemoteDatasourceImpl.login(
@@ -74,7 +75,7 @@ void main() {
     });
 
     test('failure api call throws exception when ApiClient throws', () async {
-      when(mockApiClient.post("/login", loginRequestParams)).thenThrow(Exception('Network error'));
+      when(mockApiClient.post(ApiEndpoints.login, loginRequestParams)).thenThrow(Exception('Network error'));
 
       expect(
         () => authRemoteDatasourceImpl.login(accountName: tAccountName, phoneNumber: tPhoneNumber),
