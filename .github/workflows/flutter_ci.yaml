@@ -21,8 +21,12 @@ jobs:
         with:
           flutter-version: "3.35.2"
 
+      - name: Create temporary .env
+        run: |
+          echo "BASE_URL=" > .env
+
       - name: Get dependencies
-        run: flutter pub get
+        run: dart pub get
 
       - name: Check formatting
         run: dart format --output=none --set-exit-if-changed .
@@ -31,10 +35,10 @@ jobs:
         run: dart run build_runner build --delete-conflicting-outputs
 
       - name: Detect errors or fatal warnings
-        run: flutter analyze --fatal-warnings
+        run: dart analyze --fatal-warnings
 
       - name: Run tests
-        run: flutter test --coverage
+        run: dart test --coverage
 
       - name: Build Android APK
-        run: flutter build apk --debug
+        run: dart build apk --debug
