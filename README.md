@@ -1,7 +1,3 @@
-Aquí tienes la traducción al inglés de tu README completo:
-
----
-
 # Hacom Frontend App
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.35.2-blue?logo=flutter\&logoColor=white)](https://flutter.dev)
