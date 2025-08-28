@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacom_frontend_app/core/network/api_client.dart';
-import 'package:hacom_frontend_app/core/network/api_endpoints.dart';
 import 'package:hacom_frontend_app/features/supervisor/data/datasources/remote/supervisor_remote_datasource_impl.dart';
 import 'package:hacom_frontend_app/features/supervisor/domain/entities/vehicles_response_entity.dart';
 import 'package:http/http.dart' as http;
@@ -54,9 +53,7 @@ void main() {
 
     test('success api call returns VehiclesResponseEntity', () async {
       when(
-        mockApiClient.get(
-          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
-        ),
+        mockApiClient.get('/getVehicles?page=$tPage&limit=$tLimit'),
       ).thenAnswer((_) async => http.Response(jsonEncode(tVehiclesJson), 200));
 
       final result = await datasource.getVehicles(page: tPage, limit: tLimit);
@@ -65,17 +62,13 @@ void main() {
       expect(result.total, tVehiclesEntity.total);
       expect(result.vehicles.length, tVehiclesEntity.vehicles.length);
       verify(
-        mockApiClient.get(
-          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
-        ),
+        mockApiClient.get('/getVehicles?page=$tPage&limit=$tLimit'),
       ).called(1);
     });
 
     test('throws exception when response is null', () async {
       when(
-        mockApiClient.get(
-          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
-        ),
+        mockApiClient.get('/getVehicles?page=$tPage&limit=$tLimit'),
       ).thenAnswer((_) async => null);
 
       expect(
@@ -83,17 +76,13 @@ void main() {
         throwsA(isA<String>()),
       );
       verify(
-        mockApiClient.get(
-          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
-        ),
+        mockApiClient.get('/getVehicles?page=$tPage&limit=$tLimit'),
       ).called(1);
     });
 
     test('throws exception when statusCode is not 200', () async {
       when(
-        mockApiClient.get(
-          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
-        ),
+        mockApiClient.get('/getVehicles?page=$tPage&limit=$tLimit'),
       ).thenAnswer((_) async => http.Response('Error', 401));
 
       expect(
@@ -101,17 +90,13 @@ void main() {
         throwsA(isA<String>()),
       );
       verify(
-        mockApiClient.get(
-          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
-        ),
+        mockApiClient.get('/getVehicles?page=$tPage&limit=$tLimit'),
       ).called(1);
     });
 
     test('throws exception when ApiClient.get throws', () async {
       when(
-        mockApiClient.get(
-          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
-        ),
+        mockApiClient.get('/getVehicles?page=$tPage&limit=$tLimit'),
       ).thenThrow(Exception('Network error'));
 
       expect(
@@ -119,9 +104,7 @@ void main() {
         throwsA(isA<String>()),
       );
       verify(
-        mockApiClient.get(
-          '${ApiEndpoints.getPlaces}?page=$tPage&limit=$tLimit',
-        ),
+        mockApiClient.get('/getVehicles?page=$tPage&limit=$tLimit'),
       ).called(1);
     });
   });
