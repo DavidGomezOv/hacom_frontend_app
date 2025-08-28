@@ -11,6 +11,8 @@
 Flutter application for vehicle supervision and geolocation functionalities.
 Implements Clean Architecture by feature, navigation via routes, state management with BLoC and Cubits, maps and geolocation, authentication and session management with JWT, unit tests and widget tests.
 
+🚀 **Checkout the Backend API here:** [Hacom Backend API](https://github.com/DavidGomezOv/hacom_backend)
+
 ---
 
 ## 📦 Project Structure
